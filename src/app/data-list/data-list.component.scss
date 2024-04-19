@@ -1,0 +1,46 @@
+.container {
+  margin: 20px;
+}
+
+.form-field {
+  margin-bottom: 20px;
+}
+
+.mat-table {
+  width: 100%;
+}
+
+.mat-cell,
+.mat-header-cell {
+  padding: 12px;
+  text-align: center;
+}
+
+.mat-header-cell {
+  font-weight: bold;
+  background-color: #f5f5f5;
+}
+
+.user-photo {
+  img {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+  }
+}
+
+.sort-button {
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  min-width: unset;
+  border-radius: 50%;
+  background-color: transparent;
+}
+
+.sort-button:hover {
+  background-color: rgba(0, 0, 0, 0.04);
+}
