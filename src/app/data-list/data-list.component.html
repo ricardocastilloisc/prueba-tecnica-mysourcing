@@ -9,6 +9,13 @@
     </mat-select>
   </mat-form-field>
 
+  <div class="form-field">
+    <mat-form-field>
+      <input matInput [(ngModel)]="inputFilter" placeholder="Buscar valor..." (keyup)="applyFilter()">
+    </mat-form-field>
+  </div>
+
+
   <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
 
     <ng-container matColumnDef="photo">

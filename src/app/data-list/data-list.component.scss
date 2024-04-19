@@ -1,5 +1,8 @@
 .container {
   margin: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
 }
 
 .form-field {
@@ -32,15 +35,7 @@
   }
 }
 
-.sort-button {
-  width: 24px;
-  height: 24px;
-  padding: 0;
-  min-width: unset;
-  border-radius: 50%;
-  background-color: transparent;
+.form-field {
+  width: 100%;
 }
 
-.sort-button:hover {
-  background-color: rgba(0, 0, 0, 0.04);
-}

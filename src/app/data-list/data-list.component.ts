@@ -16,6 +16,7 @@ export class DataListComponent implements OnInit {
   dataSource: MatTableDataSource<UserTableRow>;
   pageSizeOptions: number[] = [5, 10, 20];
   columnsLimit: number = 5;
+  inputFilter:string = ''
   displayedColumns: string[] = [
     'photo',
     'first_name',
@@ -56,4 +57,8 @@ export class DataListComponent implements OnInit {
     this.columnsLimit = limit;
     this.getUsers();
   };
+
+  applyFilter = () => {
+    this.dataSource.filter = this.inputFilter.trim().toLowerCase();
+  }
 }
