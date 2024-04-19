@@ -16,13 +16,14 @@ export class DataListComponent implements OnInit {
   dataSource: MatTableDataSource<UserTableRow>;
   pageSizeOptions: number[] = [5, 10, 20];
   columnsLimit: number = 5;
-  inputFilter:string = ''
+  inputFilter: string = '';
   displayedColumns: string[] = [
     'photo',
     'first_name',
     'last_name',
     'email',
     'nationality',
+    'delete',
   ];
 
   constructor(private userService: UserService) {
@@ -34,6 +35,8 @@ export class DataListComponent implements OnInit {
   }
 
   getUsers = () => {
+    this.inputFilter = '';
+    this.dataSource.filter = '';
     this.userService.getUsers(this.columnsLimit).subscribe({
       next: (response: RandomUserResponse) => {
         this.dataSource.data = response.results.map((user) =>
@@ -60,5 +63,17 @@ export class DataListComponent implements OnInit {
 
   applyFilter = () => {
     this.dataSource.filter = this.inputFilter.trim().toLowerCase();
-  }
+  };
+
+  deleteUser = (email: string) => {
+    const index = this.dataSource.data.findIndex(
+      (user) => user.email === email
+    );
+    if (index !== -1) {
+      this.dataSource.data.splice(index, 1);
+      this.dataSource = new MatTableDataSource<UserTableRow>(
+        this.dataSource.data
+      );
+    }
+  };
 }
