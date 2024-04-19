@@ -1,10 +1,10 @@
 <div class="container">
   <mat-form-field appearance="fill" class="form-field">
-    <mat-label>Visualizations</mat-label>
+    <mat-label>Elementos</mat-label>
     <input matInput type="number" [(ngModel)]="numVisualizations" (change)="getUsers()">
   </mat-form-field>
 
-  <table mat-table [dataSource]="users" class="mat-elevation-z8">
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
 
     <ng-container matColumnDef="photo">
       <th mat-header-cell *matHeaderCellDef>Foto</th>
@@ -29,10 +29,14 @@
     </ng-container>
 
     <ng-container matColumnDef="nationality">
-      <th mat-header-cell *matHeaderCellDef>Nacionalidad </th>
+      <th mat-header-cell *matHeaderCellDef>
+        Nacionalidad
+        <button mat-icon-button (click)="sortData()" class="sort-button">
+          <mat-icon>{{ sortDirection === 'asc' ? 'arrow_upward' : 'arrow_downward' }}</mat-icon>
+        </button>
+      </th>
       <td mat-cell *matCellDef="let user">{{ user.nationality }}</td>
     </ng-container>
-
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let user; columns: displayedColumns;"></tr>

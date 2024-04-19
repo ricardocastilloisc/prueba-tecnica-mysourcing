@@ -4,7 +4,8 @@ import {
   User,
   RandomUserResponse,
   UserTableRow,
-} from '../interfaces/user.interface'; // Importamos las interfaces
+} from '../interfaces/user.interface';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-user-view',
@@ -12,7 +13,6 @@ import {
   styleUrls: ['./user-view.component.scss'],
 })
 export class UserViewComponent implements OnInit {
-  users: UserTableRow[] = [];
   numVisualizations: number = 100;
   displayedColumns: string[] = [
     'photo',
@@ -21,28 +21,43 @@ export class UserViewComponent implements OnInit {
     'email',
     'nationality',
   ];
-  error: string | null = null;
+  sortDirection: 'asc' | 'desc' = 'asc';
+  dataSource: MatTableDataSource<UserTableRow>;
 
-  constructor(private userService: UserService) {}
+  constructor(private userService: UserService) {
+    this.dataSource = new MatTableDataSource<UserTableRow>([]);
+  }
 
   ngOnInit(): void {
     this.getUsers();
   }
 
-  getUsers(): void {
-    this.userService.getUsers(this.numVisualizations).subscribe(
-      (response: RandomUserResponse) => {
-        this.users = response.results.map(this.mapUserToTableRow);
+  getUsers = () => {
+    this.userService.getUsers(this.numVisualizations).subscribe({
+      next: (response: RandomUserResponse) => {
+        this.dataSource.data = response.results.map((user) =>
+          this.mapUserToTableRow(user)
+        );
       },
-      (error) => {
+      error: (error) => {
         console.error('Error fetching users:', error);
-      }
-    );
-  }
+      },
+    });
+  };
 
-  mapUserToTableRow({ picture, name, email, nat }: User): UserTableRow {
+  mapUserToTableRow = (user: User): UserTableRow => {
+    const { picture, name, email, nat } = user;
     const { medium: photo } = picture;
     const { first: first_name, last: last_name } = name;
     return { photo, first_name, last_name, email, nationality: nat };
-  }
+  };
+
+  sortData = () => {
+    this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc';
+    this.dataSource.data = this.dataSource.data.sort((a, b) => {
+      return this.sortDirection === 'asc'
+        ? a.nationality.localeCompare(b.nationality)
+        : b.nationality.localeCompare(a.nationality);
+    });
+  };
 }
