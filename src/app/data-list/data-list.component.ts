@@ -26,6 +26,11 @@ export class DataListComponent implements OnInit {
     'delete',
   ];
 
+  sortDirectionNationality: 'asc' | 'desc' = 'asc';
+  sortDirectionEmail: 'asc' | 'desc' = 'asc';
+  sortDirectionLastName: 'asc' | 'desc' = 'asc';
+  sortDirectionFirstName: 'asc' | 'desc' = 'asc';
+
   constructor(private userService: UserService) {
     this.dataSource = new MatTableDataSource<UserTableRow>([]);
   }
@@ -76,4 +81,29 @@ export class DataListComponent implements OnInit {
       );
     }
   };
+
+  sortDataNationality = () => {
+    this.sortDirectionNationality = this.sortDirectionNationality === 'asc' ? 'desc' : 'asc';
+    this.dataSource.data = this.dataSource.data.sort((a, b) => {
+      return this.sortDirectionNationality === 'asc' ? a.nationality.localeCompare(b.nationality) : b.nationality.localeCompare(a.nationality);
+    });
+  }
+  sortDataEmail = () => {
+    this.sortDirectionEmail = this.sortDirectionEmail === 'asc' ? 'desc' : 'asc';
+    this.dataSource.data = this.dataSource.data.sort((a, b) => {
+      return this.sortDirectionEmail === 'asc' ? a.email.localeCompare(b.email) : b.email.localeCompare(a.email);
+    });
+  }
+  sortDataLastName = () => {
+    this.sortDirectionLastName = this.sortDirectionLastName === 'asc' ? 'desc' : 'asc';
+    this.dataSource.data = this.dataSource.data.sort((a, b) => {
+      return this.sortDirectionLastName === 'asc' ? a.last_name.localeCompare(b.last_name) : b.last_name.localeCompare(a.last_name);
+    });
+  }
+  sortDataFirstName = () => {
+    this.sortDirectionFirstName = this.sortDirectionFirstName === 'asc' ? 'desc' : 'asc';
+    this.dataSource.data = this.dataSource.data.sort((a, b) => {
+      return this.sortDirectionFirstName === 'asc' ? a.first_name.localeCompare(b.first_name) : b.first_name.localeCompare(a.first_name);
+    });
+  }
 }
